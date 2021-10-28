@@ -115,11 +115,5 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     terminal.clear().ok();
 
-    // for _ in 0..10000 {
-    //     let pressure = sensor.read_pressure()?;
-
-    //     println!("Pressure: {}", pressure);
-    // }
-
     Ok(())
 }
