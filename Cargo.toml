@@ -12,3 +12,5 @@ embedded-hal = "=1.0.0-alpha.5"
 rppal = { version = "0.13", features = ["hal"]}
 tui = "0.16"
 termion = "1.5"
+rumqttd = "0.9"
+confy = "0.4"
