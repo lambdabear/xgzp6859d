@@ -13,7 +13,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let delay = Delay::new();
     let mut sensor = Xgzp6859d::new(i2c, delay)?;
 
-    let config: Config = confy::load_path("rumqttd.conf").unwrap();
+    let config: Config = confy::load_path("/home/pi/rumqttd.conf").unwrap();
     let mut broker = Broker::new(config);
     let mut tx = broker
         .link("localclient")
@@ -26,7 +26,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     loop {
         let pressure = sensor.read_pressure()?;
-        println!("Pressure: {}", pressure);
+        // println!("Pressure: {}", pressure);
 
         tx.publish("pressure/data", false, pressure.to_le_bytes())
             .expect("Publish failed");
