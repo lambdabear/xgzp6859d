@@ -48,12 +48,12 @@ where
         self.i2c.write_read(ADDR, &[DATA_LSB_REG], &mut buffer)?;
         let data_lsb = buffer[0];
 
-        let adc = data_msb as u32 * 65536 + data_csb as u32 * 256 + data_lsb as u32;
+        let adc = data_msb as i32 * 65536 + data_csb as i32 * 256 + data_lsb as i32;
 
         if data_msb < 0x80 {
-            Ok(adc as i32 / K as i32)
+            Ok(adc / K as i32)
         } else {
-            Ok((adc - 16777216) as i32 / K as i32)
+            Ok((adc - 16777216) / K as i32)
         }
     }
 }
