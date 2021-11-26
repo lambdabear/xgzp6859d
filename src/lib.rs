@@ -4,7 +4,7 @@ use embedded_hal::{
 };
 
 const ADDR: u8 = 0x6D;
-const K: u8 = 32;
+const K: u8 = 64;
 const SYS_CONFIG_REG: u8 = 0xA5;
 const CMD_REG: u8 = 0x30;
 const DATA_MSB_REG: u8 = 0x06;
@@ -31,7 +31,7 @@ where
         Ok(Self { i2c, delay })
     }
 
-    pub fn read_pressure(&mut self) -> Result<f32, E> {
+    pub fn read_pressure(&mut self) -> Result<i32, E> {
         self.i2c.write(ADDR, &[CMD_REG, MEASURE_PRESSURE_CMD])?;
 
         let mut buffer = [0_u8];
@@ -51,9 +51,9 @@ where
         let adc = data_msb as u32 * 65536 + data_csb as u32 * 256 + data_lsb as u32;
 
         if data_msb < 0x80 {
-            Ok(adc as f32 / K as f32)
+            Ok(adc as i32 / K as i32)
         } else {
-            Ok((adc - 16777216) as f32 / K as f32)
+            Ok((adc - 16777216) as i32 / K as i32)
         }
     }
 }
